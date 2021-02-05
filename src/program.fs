@@ -5,18 +5,18 @@ open NITRO
 module Program =
 
     let index : Nitro -> Msg = function
-        | Init ->
+        | Init token ->
             Elem.Button ("send", [], "Send", { Source = ["msg"]; Kind = "click";
                                                Postback = Atom "send" })
             |> update "send"
         | Message (Atom "send", query) ->
-          match query.TryFind "msg" with
-          | Some value -> insertBottom "hist" (div [] [Elem.Liter value])
-          | None -> Nope
+            match query.TryFind "msg" with
+            | Some value -> insertBottom "hist" (div [] [Elem.Liter value])
+            | None -> Nope
         | _ -> Nope
 
     let about : Nitro -> Msg = function
-        | Init -> updateText "app" "This is the N2O Hello World App"
+        | Init token -> updateText "app" "This is the N2O Hello World App"
         | _ -> Nope
 
     let router (req : Req) : Nitro -> Msg =
